@@ -27,7 +27,6 @@ public static class Day8
         
         var circuits = new List<HashSet<Point>>();
         var visited = new HashSet<Point>();
-
         foreach (var p in points)
         {
             if (visited.Contains(p)) continue;
@@ -44,7 +43,7 @@ public static class Day8
             .Aggregate((x, y) => x * y);
         
         sw.Stop();
-        Console.WriteLine(string.Join(", ", result));
+        Console.WriteLine(result);
         Console.WriteLine(sw.Elapsed);
     }
     
