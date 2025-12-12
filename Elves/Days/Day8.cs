@@ -4,14 +4,13 @@ namespace Elves.Days;
 
 public static class Day8
 {
-    private const int Iterations = 1000;
-    
-    public static void Go(string input)
+    public static void Go(string input, int iterations)
     {
         var sw = Stopwatch.StartNew();
         
         var lines = input.Split('\n');
-        var points = lines.Select(t => t.Split(','))
+        var points = lines
+            .Select(t => t.Split(','))
             .Select((xyz, i) => new Point
             {
                 Index = i,
@@ -20,17 +19,11 @@ public static class Day8
                 Z = double.Parse(xyz[2])
             }).ToList();
         foreach (var p1 in points)
-        {
             foreach (var p2 in points.Where(p => p.Index > p1.Index))
-            {
                 p1.Distances[p2] = GetDistance(p1, p2);
-            }
-        }
 
-        for (var i = 0; i < Iterations; i++)
-        {
+        for (var i = 0; i < iterations; i++)
             FindMinDistanceAndConnect(points);
-        }
         
         var circuits = new List<HashSet<Point>>();
         var visited = new HashSet<Point>();
@@ -61,7 +54,6 @@ public static class Day8
         var index2 = 0;
         var minDistance = double.MaxValue;
         foreach (var p in points)
-        {
             foreach (var distance in p.Distances)
             {
                 if (p.Neighbours.Contains(distance.Key)) continue;
@@ -70,7 +62,6 @@ public static class Day8
                 index1 = p.Index;
                 index2 = distance.Key.Index;
             }
-        }
 
         var p1 = points[index1];
         var p2 = points[index2];
